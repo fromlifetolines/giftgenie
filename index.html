@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>GiftGenie 禮物救星 | 幫你解決送禮煩惱</title>
+    <meta name="description" content="不知道送什麼？讓 AI 幫你決定！實用、搞笑、地獄禮物產生器。">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Noto Sans TC', sans-serif; }
+        .slot-text { text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .btn-bounce:active { transform: scale(0.95); }
+        .toast-enter-active, .toast-leave-active { transition: all 0.5s ease; }
+        .toast-enter-from, .toast-leave-to { opacity: 0; transform: translateY(-20px); }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen text-gray-800 flex flex-col items-center justify-center p-4">
+    <div id="app" class="w-full max-w-md bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl overflow-hidden min-h-[600px] flex flex-col relative">
+        <div class="pt-8 pb-4 text-center px-4">
+            <h1 class="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-500 mb-2">GiftGenie</h1>
+            <p class="text-gray-500 text-sm font-bold tracking-wide">🎁 禮物救星 • 選擇困難症特效藥</p>
+        </div>
+        <div class="flex-1 px-6 py-4 flex flex-col gap-5">
+            <div class="space-y-4">
+                <div class="relative"><label class="block text-xs font-bold text-gray-400 mb-1 ml-1 uppercase">送給誰</label><select v-model="selectedTarget" class="w-full bg-gray-100 text-gray-700 font-bold py-3 px-4 rounded-xl appearance-none focus:outline-none focus:ring-2 focus:ring-purple-500"><option>男朋友 👦</option><option>女朋友 👧</option><option>好同事 💼</option><option>屁孩 / 晚輩 👶</option><option>交換禮物對象 🎁</option></select></div>
+                <div class="relative"><label class="block text-xs font-bold text-gray-400 mb-1 ml-1 uppercase">預算</label><select v-model="selectedBudget" class="w-full bg-gray-100 text-gray-700 font-bold py-3 px-4 rounded-xl appearance-none focus:outline-none focus:ring-2 focus:ring-purple-500"><option>300元 以內 💸</option><option>500元 左右 💰</option><option>1000元 質感 ✨</option><option>預算無上限 💳</option></select></div>
+                <div class="relative"><label class="block text-xs font-bold text-gray-400 mb-1 ml-1 uppercase">風格</label><select v-model="selectedVibe" class="w-full bg-purple-50 border-2 border-purple-100 text-purple-900 font-bold py-3 px-4 rounded-xl appearance-none focus:outline-none focus:ring-2 focus:ring-purple-500"><option value="實用">實用居家 (不會錯)</option><option value="搞笑">搞笑 / 惡搞 (有梗)</option><option value="地獄">地獄爛禮物 (友情破壞)</option><option value="浪漫">浪漫 / 儀式感 (曖昧)</option><option value="高CP值">高 CP 值 3C (科技)</option><option value="辦公室">辦公室神器 (社畜)</option></select></div>
+            </div>
+            <div class="flex-1 flex flex-col items-center justify-center min-h-[160px] bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200 mt-2 relative overflow-hidden transition-all duration-300" :class="{'border-purple-400 bg-purple-50 scale-105': isAnimating}">
+                <span v-if="!hasGenerated && !isAnimating" class="text-gray-400 font-bold text-lg text-center px-4">準備好了嗎？<br>點擊下方按鈕 👇</span>
+                <h2 v-else class="text-3xl md:text-4xl font-black text-center text-gray-800 px-4 leading-tight slot-text break-words">{{ currentDisplay }}</h2>
+                <p v-if="hasGenerated && !isAnimating" class="text-xs text-gray-400 mt-3 font-bold animate-pulse">✨ 網友激推選擇</p>
+            </div>
+            <button @click="startMachine" :disabled="isAnimating" class="w-full py-4 rounded-2xl font-black text-xl shadow-lg transform transition-all btn-bounce mb-2 text-white relative overflow-hidden group" :class="isAnimating ? 'bg-gray-400 cursor-not-allowed' : 'bg-gradient-to-r from-purple-600 to-blue-600 hover:shadow-purple-500/50'">
+                <span class="relative z-10">{{ isAnimating ? '神選運算中...' : '幫我神選！🚀' }}</span>
+                <div class="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity"></div>
+            </button>
+            <div v-if="hasGenerated && !isAnimating" class="animate-[bounce_1s_infinite]">
+                <button @click="goToShopee" class="w-full py-3 bg-[#ee4d2d] text-white rounded-xl font-bold shadow-md hover:bg-[#d03e1e] transition-colors flex items-center justify-center gap-2">
+                    <span>👉 點此去蝦皮看價格</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                </button>
+                <p class="text-[10px] text-center text-gray-400 mt-2">點擊後將自動複製關鍵字並前往賣場</p>
+            </div>
+        </div>
+        <transition name="toast"><div v-if="showToast" class="absolute top-4 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white px-6 py-3 rounded-full shadow-xl flex items-center gap-2 z-50 whitespace-nowrap"><span class="font-bold text-sm">✅ 關鍵字已複製！轉跳中...</span></div></transition>
+        <div class="bg-gray-50 py-3 text-center border-t border-gray-100"><p class="text-[10px] text-gray-400">© GiftGenie Powered by AI</p></div>
+    </div>
+    <script>
+        const { createApp, ref } = Vue;
+        // 🔴 用戶設定區 🔴
+        const affiliateLink = "https://shopee.tw/";
+
+        createApp({
+            setup() {
+                const selectedTarget = ref('女朋友 👧');
+                const selectedBudget = ref('500元 左右 💰');
+                const selectedVibe = ref('實用');
+                const currentDisplay = ref('');
+                const isAnimating = ref(false);
+                const hasGenerated = ref(false);
+                const showToast = ref(false);
+
+                // 請 AI 在此處填入完整的 JSON 資料庫
+                const giftDatabase = {
+                    "實用": ["小米自動洗手機", "無線充電盤", "掛燙機", "KINYO 吹風機", "極簡延長線 (GaN技術)", "人體工學滑鼠墊", "無印風收納盒", "快煮鍋", "除濕盒 (10入)", "不鏽鋼冰塊", "電動牙刷", "IKEA 鯊魚 (正版)", "行動電源 (自帶線)", "藍牙耳機清潔筆", "珪藻土軟地墊", "折疊手機架", "隨身果汁機", "感應小夜燈", "極輕量晴雨傘", "真空保鮮盒"],
+                    "搞笑": ["肌肉猛男抱枕", "尖叫雞 (特大號)", "好運紅內褲", "巨大化蟑螂抱枕", "佛系上班族印章", "魚頭頭套", "擬真爌肉五花肉抱枕", "光頭頭套", "大鼻子眼鏡", "金正恩面具", "指尖陀螺 (發光版)", "馬桶造型馬克杯", "仿真鹹魚筆袋", "猛男滑鼠墊 (有胸部)", "蟑螂髮夾 (10入)", "假牙軟糖", "搞笑聖旨 (奉天承運)", "一整隻烤雞腿髮箍", "錢磚抱枕", "會動的魚"],
+                    "地獄": ["高麗菜寶寶 (復古)", "一整袋紅豆 (由你數)", "三角錐 (請帶回家)", "金紙筆記本", "甘蔗一支 (含皮)", "1000片純白地獄拼圖", "競選背心 (隨機候選人)", "一袋水泥", "倉鼠滾輪 (人用的)", "點滴架", "假人頭 (美髮練習用)", "工地安全帽", "馬桶吸盤", "三角鐵 (樂器)", "一包A4紙 (500張)", "阿嬤的買菜車", "半身人體模型", "一整箱礦泉水", "滅火器", "貓砂 (20kg)"],
+                    "浪漫": ["融蠟燈禮盒", "拍立得相機 (instax)", "星空投影燈", "永生花夜燈", "專櫃護手霜 (L'Occitane)", "客製化似顏繪", "底片相機", "香氛蠟燭 (Jo Malone)", "月球燈", "刻字鋼筆", "乾燥花束", "相片列印機", "復古黑膠唱片機", "情侶對杯 (客製)", "純銀手鍊", "精油水氧機", "日落投影燈", "真絲眼罩", "手工餅乾禮盒", "泡澡球 (LUSH)"],
+                    "高CP值": ["小米手環", "行動電源 10000mAh", "熱壓吐司機", "手沖咖啡壺組", "PD快充頭", "藍牙喇叭", "電熱毯", "肩頸按摩器", "補光燈自拍棒", "電腦螢幕掛燈", "機械鍵盤 (入門款)", "switch收納包", "隨身碟 (128G)", "滑鼠手托", "筆電散熱架", "自動摺疊傘", "便攜式沖牙機", "烘鞋機", "智能體重計", "電競滑鼠"],
+                    "辦公室": ["USB保暖杯墊", "午睡趴睡枕", "療癒多肉植物", "桌上型吸塵器", "螢幕增高架", "記憶棉靠腰墊", "靜音滑鼠", "理線器 (10入)", "桌下腳踏凳", "辦公桌加濕器", "文件收納架", "螢幕防窺片", "鍵盤清潔軟膠", "手機支架 (追劇用)", "大Enter鍵 (發洩用)", "護腕滑鼠墊", "桌面垃圾桶", "便條紙磚", "訂書機 (無針)", "降噪耳塞"]
+                };
+
+                const startMachine = () => {
+                    if (isAnimating.value) return;
+                    isAnimating.value = true;
+                    hasGenerated.value = false;
+                    
+                    const targetList = giftDatabase[selectedVibe.value] || giftDatabase["實用"];
+                    let duration = 1500; 
+                    let intervalTime = 50; 
+                    let elapsed = 0;
+
+                    const interval = setInterval(() => {
+                        const randomItem = targetList[Math.floor(Math.random() * targetList.length)];
+                        currentDisplay.value = randomItem;
+                        elapsed += intervalTime;
+
+                        if (elapsed >= duration) {
+                            clearInterval(interval);
+                            isAnimating.value = false;
+                            hasGenerated.value = true;
+                            // Ensure final pick is fresh
+                            const finalPick = targetList[Math.floor(Math.random() * targetList.length)];
+                            currentDisplay.value = finalPick;
+                        }
+                    }, intervalTime);
+                };
+
+                const goToShopee = () => {
+                    const textToCopy = currentDisplay.value;
+                    
+                    // Copy Logic
+                    if (navigator.clipboard && window.isSecureContext) {
+                        navigator.clipboard.writeText(textToCopy).catch(err => console.error(err));
+                    } else {
+                        let textArea = document.createElement("textarea");
+                        textArea.value = textToCopy;
+                        textArea.style.position = "fixed";
+                        textArea.style.left = "-9999px";
+                        document.body.appendChild(textArea);
+                        textArea.focus();
+                        textArea.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(textArea);
+                    }
+                    
+                    // Toast & Redirect
+                    showToast.value = true;
+                    setTimeout(() => showToast.value = false, 2500);
+                    setTimeout(() => { window.open(affiliateLink, '_blank'); }, 800);
+                };
+
+                return { selectedTarget, selectedBudget, selectedVibe, currentDisplay, isAnimating, hasGenerated, showToast, startMachine, goToShopee };
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
