@@ -49,15 +49,17 @@
         <div class="flex-1 px-6 py-4 flex flex-col gap-5">
             <div class="space-y-4">
                 <div class="relative"><label
-                        class="block text-xs font-bold text-gray-400 mb-1 ml-1 uppercase">送給誰</label><select
-                        v-model="selectedTarget"
-                        class="w-full bg-gray-100 text-gray-700 font-bold py-3 px-4 rounded-xl appearance-none focus:outline-none focus:ring-2 focus:ring-purple-500">
-                        <option>男朋友 👦</option>
-                        <option>女朋友 👧</option>
-                        <option>好同事 💼</option>
-                        <option>屁孩 / 晚輩 👶</option>
-                        <option>交換禮物對象 🎁</option>
-                    </select></div>
+                        class="block text-xs font-bold text-gray-400 mb-1 ml-1 uppercase">送給誰</label><select v-model="selectedTarget" class="w-full bg-gray-100 text-gray-700 font-bold py-3 px-4 rounded-xl appearance-none focus:outline-none focus:ring-2 focus:ring-purple-500">
+    <option>女朋友 👧</option>
+    <option>男朋友 👦</option>
+    <option>老婆 👰</option>
+    <option>老公 🤵</option>
+    <option>交換禮物對象 🎁</option>
+    <option>聖誕節專屬 🎄</option>
+    <option>情人節專屬 💘</option>
+    <option>好同事 💼</option>
+    <option>屁孩 / 晚輩 👶</option>
+</select></div>
                 <div class="relative"><label
                         class="block text-xs font-bold text-gray-400 mb-1 ml-1 uppercase">預算</label><select
                         v-model="selectedBudget"
@@ -68,16 +70,16 @@
                         <option>預算無上限 💳</option>
                     </select></div>
                 <div class="relative"><label
-                        class="block text-xs font-bold text-gray-400 mb-1 ml-1 uppercase">風格</label><select
-                        v-model="selectedVibe"
-                        class="w-full bg-purple-50 border-2 border-purple-100 text-purple-900 font-bold py-3 px-4 rounded-xl appearance-none focus:outline-none focus:ring-2 focus:ring-purple-500">
-                        <option value="實用">實用居家 (不會錯)</option>
-                        <option value="搞笑">搞笑 / 惡搞 (有梗)</option>
-                        <option value="地獄">地獄爛禮物 (友情破壞)</option>
-                        <option value="浪漫">浪漫 / 儀式感 (曖昧)</option>
-                        <option value="高CP值">高 CP 值 3C (科技)</option>
-                        <option value="辦公室">辦公室神器 (社畜)</option>
-                    </select></div>
+                        class="block text-xs font-bold text-gray-400 mb-1 ml-1 uppercase">風格</label><select v-model="selectedVibe" class="w-full bg-purple-50 border-2 border-purple-100 text-purple-900 font-bold py-3 px-4 rounded-xl appearance-none focus:outline-none focus:ring-2 focus:ring-purple-500">
+    <option value="實用">實用居家 (不會錯)</option>
+    <option value="搞笑">搞笑 / 惡搞 (有梗)</option>
+    <option value="地獄">地獄爛禮物 (友情破壞)</option>
+    <option value="浪漫">浪漫 / 儀式感 (曖昧)</option>
+    <option value="高CP值">高 CP 值 3C (科技)</option>
+    <option value="辦公室">辦公室神器 (社畜)</option>
+    <option value="毛小孩">毛小孩專屬 (萌寵)</option>
+    <option value="開運">開運招財 (風水)</option>
+</select></div>
             </div>
             <div class="flex-1 flex flex-col items-center justify-center min-h-[160px] bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200 mt-2 relative overflow-hidden transition-all duration-300"
                 :class="{'border-purple-400 bg-purple-50 scale-105': isAnimating}">
@@ -219,6 +221,30 @@
         "保溫杯 (象印/虎牌)", "手寫板", "計算機 (機械按鍵)", "萬年曆", "筆筒 (多功能)",
         "迴紋針收納盒", "長尾夾組", "白板筆組", "便條紙 (便利貼)", "桌曆",
         "辦公椅輪子 (靜音)", "螢幕擦拭布", "酒精棉片", "乾洗手露", "名片座"
+    ],
+    "毛小孩": [
+        "貓砂 (豆腐砂)", "自動餵食機", "寵物飲水機", "貓抓板", "逗貓棒 (激光)",
+        "寵物睡墊", "狗狗潔牙骨", "貓罐頭 (一箱)", "寵物推車", "寵物外出包",
+        "寵物尿布墊", "除毛梳 (一鍵)", "寵物指甲剪", "貓草包", "貓薄荷",
+        "狗狗玩具 (發聲)", "項圈 (刻字)", "寵物GPS定位器", "貓跳台", "寵物洗毛精",
+        "伊莉莎白頸圈", "寵物烘毛箱", "寵物樓梯", "慢食碗", "寵物潔足泡沫",
+        "貓咪頭套 (扭蛋)", "寵物雨衣", "吸毛手套", "寵物除臭噴霧", "魚造型抱枕",
+        "寵物帳篷", "貓咪吊床", "寵物安全帶", "牽繩 (伸縮)", "寵物拾便袋",
+        "凍乾零食", "化毛膏", "益生菌 (寵物用)", "寵物電剪", "除蚤項圈",
+        "貓咪隧道", "寵物柵欄", "自動丟球機", "貓砂盆 (全封閉)", "寵物冰墊",
+        "寵物保暖衣", "發光項圈", "寵物濕紙巾", "貓抓屋", "寵物監視器"
+    ],
+    "開運": [
+        "紫水晶洞", "招財貓 (太陽能)", "鹽燈", "開運紅內褲", "五帝錢 (吊飾)",
+        "貔貅手鍊", "聚寶盆", "黃水晶球", "咬錢蟾蜍", "開運竹",
+        "平安符袋", "門簾 (風水)", "地墊 (紅色)", "金箔紅包袋", "發財樹",
+        "文昌筆", "葫蘆 (銅製)", "八卦鏡", "山水畫 (風水)", "粉水晶 (招桃花)",
+        "黑曜石手環", "硃砂手串", "開運印章", "金鏟子 (求子)", "錢龜 (日本)",
+        "招財精油", "艾草條", "午時水", "開運金幣", "水晶消磁碗",
+        "龍龜擺件", "流水盆 (招財)", "銅鈴", "五行珠", "太歲符",
+        "開運手錶", "金雞母", "水晶柱", "檀香爐", "淨化噴霧",
+        "御守 (日本)", "開運名片夾", "生肖金飾", "招財貓門鈴", "狐仙吊墜",
+        "七星陣", "開運米", "招財貼紙", "錢母", "風水羅盤"
     ]
 };
                 const startMachine = () => {
