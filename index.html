@@ -36,8 +36,32 @@
             transform: scale(0.9);
         }
 
-        /* Finger Animation */
-        @keyframes point-down {
+        /* Heartbeat & Color Animation */
+        @keyframes heartbeat {
+
+            0%,
+            100% {
+                transform: scale(1);
+                background-color: #ffedd5;
+                color: #c2410c;
+            }
+
+            /* orange-100 */
+            50% {
+                transform: scale(1.1);
+                background-color: #fdba74;
+                color: #9a3412;
+            }
+
+            /* orange-300 */
+        }
+
+        .animate-heartbeat {
+            animation: heartbeat 1.5s infinite ease-in-out;
+        }
+
+        /* Arrow Float */
+        @keyframes float-arrow {
 
             0%,
             100% {
@@ -49,8 +73,8 @@
             }
         }
 
-        .animate-point {
-            animation: point-down 1.5s infinite ease-in-out;
+        .animate-float {
+            animation: float-arrow 1.5s infinite ease-in-out;
         }
     </style>
 </head>
@@ -62,7 +86,7 @@
             <h1
                 class="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-500 mb-2">
                 GiftGenie</h1>
-            <p class="text-gray-500 text-sm font-bold tracking-wide">禮物救星 • 選擇困難特效藥</p>
+            <p class="text-gray-500 text-sm font-bold tracking-wide">🎁 禮物救星 • 選擇困難症特效藥</p>
         </div>
         <div class="flex-1 px-6 py-4 flex flex-col gap-5">
             <div class="space-y-4">
@@ -152,18 +176,20 @@
                             </svg>
                         </div>
                         <h3 class="text-xl font-black text-gray-800 mb-1">關鍵字已複製！</h3>
-                        <p class="text-sm text-gray-500 mb-4">系統已自動幫您複製商品名稱</p>
+                        <p class="text-sm text-gray-500 mb-6">系統已自動幫您複製商品名稱</p>
 
-                        <div
-                            class="bg-white border border-purple-100 rounded-xl p-3 mb-4 shadow-inner flex flex-col items-center">
-                            <div class="animate-point pb-1">
-                                <span class="text-2xl">👇</span>
-                            </div>
-                            <p class="text-gray-400 text-xs font-bold uppercase mb-1">下一步 NEXT STEP</p>
-                            <p class="text-gray-800 font-bold text-sm">
+                        <div class="flex flex-col items-center gap-1 mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-500 animate-float"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                    d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                            </svg>
+                            <p class="text-gray-400 text-xs font-bold uppercase tracking-wider">NEXT STEP</p>
+
+                            <div class="mt-2 text-gray-800 font-bold text-sm">
                                 到蝦皮搜尋框 <span
-                                    class="text-[#ee4d2d] bg-orange-100 px-2 py-0.5 rounded animate-pulse">長按貼上</span>
-                            </p>
+                                    class="px-3 py-1 rounded-lg border-2 border-orange-200 shadow-sm animate-heartbeat inline-block">長按貼上</span>
+                            </div>
                         </div>
                         <button @click="confirmRedirect"
                             class="w-full py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-xl font-black shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 text-lg">
@@ -201,7 +227,7 @@
                     "毛小孩": ["貓砂 (豆腐砂)", "自動餵食機", "寵物飲水機", "貓抓板", "逗貓棒 (激光)", "寵物睡墊", "狗狗潔牙骨", "貓罐頭 (一箱)", "寵物推車", "寵物外出包", "寵物尿布墊", "除毛梳 (一鍵)", "寵物指甲剪", "貓草包", "貓薄荷", "狗狗玩具 (發聲)", "項圈 (刻字)", "寵物GPS定位器", "貓跳台", "寵物洗毛精", "伊莉莎白頸圈", "寵物烘毛箱", "寵物樓梯", "慢食碗", "寵物潔足泡沫", "貓咪頭套 (扭蛋)", "寵物雨衣", "吸毛手套", "寵物除臭噴霧", "魚造型抱枕", "寵物帳篷", "貓咪吊床", "寵物安全帶", "牽繩 (伸縮)", "寵物拾便袋", "凍乾零食", "化毛膏", "益生菌 (寵物用)", "寵物電剪", "除蚤項圈", "貓咪隧道", "寵物柵欄", "自動丟球機", "貓砂盆 (全封閉)", "寵物冰墊", "寵物保暖衣", "發光項圈", "寵物濕紙巾", "貓抓屋", "寵物監視器"],
                     "開運": ["紫水晶洞", "招財貓 (太陽能)", "鹽燈", "開運紅內褲", "五帝錢 (吊飾)", "貔貅手鍊", "聚寶盆", "黃水晶球", "咬錢蟾蜍", "開運竹", "平安符袋", "門簾 (風水)", "地墊 (紅色)", "金箔紅包袋", "發財樹", "文昌筆", "葫蘆 (銅製)", "八卦鏡", "山水畫 (風水)", "粉水晶 (招桃花)", "黑曜石手環", "硃砂手串", "開運印章", "金鏟子 (求子)", "錢龜 (日本)", "招財精油", "艾草條", "午時水", "開運金幣", "水晶消磁碗", "龍龜擺件", "流水盆 (招財)", "銅鈴", "五行珠", "太歲符", "開運手錶", "金雞母", "水晶柱", "檀香爐", "淨化噴霧", "御守 (日本)", "開運名片夾", "生肖金飾", "招財貓門鈴", "狐仙吊墜", "七星陣", "開運米", "招財貼紙", "錢母", "風水羅盤"]
                 };
-                // 🔴 夢幻逸品清單 (High-Ticket Items) - 只有選「預算無上限」時才會出現
+                // 🔴 夢幻逸品清單 (High-Ticket Items)
                 const luxuryList = [
                     "iPhone 17 Pro Max", "iPhone 17", "iPhone 17 Plus", "Samsung S25 Ultra", "Samsung S25 Plus", "Samsung Galaxy Z Flip 7",
                     "iPad Pro (M5晶片)", "iPad Air", "MacBook Air (M4)", "MacBook Pro (M4 Pro)", "iMac 24吋", "Apple Watch Ultra 3",
@@ -216,7 +242,6 @@
                     isAnimating.value = true;
                     hasGenerated.value = false;
 
-                    // 🔴 關鍵邏輯：如果有選「預算無上限」，強制使用 luxuryList
                     let targetList;
                     if (selectedBudget.value === '預算無上限 💳') {
                         targetList = luxuryList;
