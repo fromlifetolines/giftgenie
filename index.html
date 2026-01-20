@@ -34,6 +34,25 @@
         .modal-leave-to {
             opacity: 0;
         }
+
+        @keyframes heartbeat {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.15);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .animate-attention {
+            animation: heartbeat 1.5s infinite ease-in-out;
+            display: inline-block;
+        }
     </style>
 </head>
 
@@ -121,12 +140,15 @@
                         </svg>
                     </div>
                     <h3 class="text-2xl font-black text-gray-800 mb-2">關鍵字已複製！</h3>
-                    <p class="text-gray-500 mb-6 font-bold">
-                        到蝦皮後，請在搜尋框<br>
-                        <span class="text-[#ee4d2d] bg-orange-50 px-2 py-1 rounded">👉 長按貼上</span> 即可搜尋
-                    </p>
+                    <div class="text-gray-600 mb-6 font-bold text-lg leading-relaxed">
+                        到蝦皮搜尋框後<br>
+                        <span class="animate-attention text-white bg-[#ee4d2d] px-4 py-1 rounded-full shadow-md mt-2">
+                            👆 長按貼上
+                        </span>
+                        <br>即可找到商品
+                    </div>
                     <button @click="confirmRedirect"
-                        class="w-full py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-xl font-bold shadow-lg text-lg">
+                        class="w-full py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-xl font-bold shadow-lg text-lg transform transition active:scale-95">
                         我知道了，前往蝦皮 🛍️
                     </button>
                 </div>
