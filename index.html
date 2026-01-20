@@ -45,7 +45,7 @@
             }
 
             50% {
-                transform: translateY(10px);
+                transform: translateY(5px);
             }
         }
 
@@ -154,13 +154,15 @@
                         <h3 class="text-xl font-black text-gray-800 mb-1">關鍵字已複製！</h3>
                         <p class="text-sm text-gray-500 mb-4">系統已自動幫您複製商品名稱</p>
 
-                        <div class="relative bg-white border border-purple-100 rounded-xl p-3 mb-4 shadow-inner">
-                            <div class="absolute -top-8 left-1/2 transform -translate-x-1/2 animate-point">
-                                <span class="text-3xl">👇</span>
+                        <div
+                            class="bg-white border border-purple-100 rounded-xl p-3 mb-4 shadow-inner flex flex-col items-center">
+                            <div class="animate-point pb-1">
+                                <span class="text-2xl">👇</span>
                             </div>
-                            <p class="text-gray-400 text-xs font-bold uppercase mb-1">下一步 Next Step</p>
+                            <p class="text-gray-400 text-xs font-bold uppercase mb-1">下一步 NEXT STEP</p>
                             <p class="text-gray-800 font-bold text-sm">
-                                到蝦皮搜尋框 <span class="text-[#ee4d2d] bg-orange-100 px-2 py-0.5 rounded">長按貼上</span>
+                                到蝦皮搜尋框 <span
+                                    class="text-[#ee4d2d] bg-orange-100 px-2 py-0.5 rounded animate-pulse">長按貼上</span>
                             </p>
                         </div>
                         <button @click="confirmRedirect"
@@ -214,7 +216,7 @@
                     isAnimating.value = true;
                     hasGenerated.value = false;
 
-                    // 🔴 關鍵邏輯修改：如果有選「預算無上限」，強制使用 luxuryList
+                    // 🔴 關鍵邏輯：如果有選「預算無上限」，強制使用 luxuryList
                     let targetList;
                     if (selectedBudget.value === '預算無上限 💳') {
                         targetList = luxuryList;
