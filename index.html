@@ -36,31 +36,30 @@
             transform: scale(0.9);
         }
 
-        /* Heartbeat & Color Animation */
+        /* Heartbeat Animation for Button */
         @keyframes heartbeat {
 
             0%,
             100% {
                 transform: scale(1);
                 background-color: #ffedd5;
-                color: #c2410c;
+                color: #ea580c;
+                border-color: #fdba74;
             }
 
-            /* orange-100 */
             50% {
                 transform: scale(1.1);
-                background-color: #fdba74;
-                color: #9a3412;
+                background-color: #fff7ed;
+                color: #c2410c;
+                border-color: #fb923c;
             }
-
-            /* orange-300 */
         }
 
         .animate-heartbeat {
             animation: heartbeat 1.5s infinite ease-in-out;
         }
 
-        /* Arrow Float */
+        /* Arrow Float Animation */
         @keyframes float-arrow {
 
             0%,
@@ -69,12 +68,12 @@
             }
 
             50% {
-                transform: translateY(5px);
+                transform: translateY(6px);
             }
         }
 
         .animate-float {
-            animation: float-arrow 1.5s infinite ease-in-out;
+            animation: float-arrow 2s infinite ease-in-out;
         }
     </style>
 </head>
@@ -178,17 +177,21 @@
                         <h3 class="text-xl font-black text-gray-800 mb-1">關鍵字已複製！</h3>
                         <p class="text-sm text-gray-500 mb-6">系統已自動幫您複製商品名稱</p>
 
-                        <div class="flex flex-col items-center gap-1 mb-6">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-500 animate-float"
+                        <div class="flex flex-col items-center gap-2 mb-6 relative">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-400 animate-float"
                                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
-                                    d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                                    d="M19 13l-7 7-7-7m14-8l-7 7-7-7" />
                             </svg>
-                            <p class="text-gray-400 text-xs font-bold uppercase tracking-wider">NEXT STEP</p>
 
-                            <div class="mt-2 text-gray-800 font-bold text-sm">
-                                到蝦皮搜尋框 <span
-                                    class="px-3 py-1 rounded-lg border-2 border-orange-200 shadow-sm animate-heartbeat inline-block">長按貼上</span>
+                            <p class="text-gray-400 text-[10px] font-bold uppercase tracking-widest">NEXT STEP</p>
+
+                            <div class="text-gray-800 font-bold text-sm w-full">
+                                到蝦皮搜尋框
+                                <span
+                                    class="block mt-2 px-4 py-2 rounded-xl border-2 shadow-sm animate-heartbeat font-black text-lg">
+                                    長按貼上 📋
+                                </span>
                             </div>
                         </div>
                         <button @click="confirmRedirect"
@@ -206,7 +209,7 @@
     <script>
         const { createApp, ref } = Vue;
         // 🔴 用戶注意：請務必在此填入你的蝦皮分潤連結 🔴
-        const affiliateLink = "https://s.shopee.tw/4fq55UA5eG";
+        const affiliateLink = "https://shopee.tw/";
         createApp({
             setup() {
                 const selectedTarget = ref('女朋友 👧');
